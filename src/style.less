@@ -1,0 +1,268 @@
+@import "reset";
+@import "colors";
+@import "mixins";
+
+@phoneCellWidth: 110px;
+
+body {
+	background: @bg-1;
+	font-family: Lato;
+}
+
+.header {
+	z-index: 100;
+	top: 0;
+	left: -1px;
+	position: fixed;
+	display: flex;
+	flex-direction: row;
+	width: 100vw;
+	background: @bg-1;
+	h1 {
+		position: fixed;
+		padding: 10px;
+		color: @bw-100;
+		font-size: 24px;
+	}
+	.settingsBar {
+		height: 50px;
+		width: 151px + 91px + 251px + (@phoneCellWidth + 1px) + 201px + 50px + (5px * 12);
+		margin: auto; 
+		display: flex;
+		flex-direction: row;
+		.settingsButton {
+			flex: 1;
+			margin: 10px 10px 10px 0;
+			background-color: @bw-90;
+			color: darken(@blue, 10%);
+			font-size: 16px;
+			font-weight: bold;
+			padding: 5px;
+			text-align: center;
+			&:nth-child(4) { margin: 10px 0 10px 0; }
+			&:hover {
+				cursor: pointer;
+				background-color: @bw-95;
+			}		
+		}
+		input {
+			padding: 5px;
+			margin: 10px 10px 10px 0;
+			.selectableText;
+		}
+	}
+}
+
+.patientList {
+	margin: 48px auto 50px auto;
+	display: table;
+	.patientList-title {
+		display: flex;
+		flex-direction: row;
+		position: fixed;
+		z-index: 100;
+		top: 50px;
+		box-shadow: 0px 2px 3px -2px @bw-0;
+		div {
+			padding: 5px;
+			background-color: @bw-100;
+			&:nth-child(1) { width: 151px }
+			&:nth-child(2) { width: 91px }
+			&:nth-child(3) { width: 251px }
+			&:nth-child(4) { width: (@phoneCellWidth + 1px) }
+			&:nth-child(5) { width: 201px }
+			&:nth-child(6) { 
+				text-align: center;
+				width: 50px;
+				color: @green;
+				font-weight: bold;
+				margin-left: -1px; 
+				border-left: 1px solid @green;
+				&:hover {
+					background-color: @green;
+					color: @bw-100;
+				}
+			}
+		}
+	}
+	.patientList-patient {
+		&.patientList-newPatient {
+			position: fixed;
+			z-index: 50;
+			top: 80px;
+			margin-top: -32px;
+			transition: all 0.4s;
+			border-bottom: 1px solid @bw-0;
+			margin-bottom: 0;
+			background-color: @bw-100;
+			input[type='text']  {
+				margin: 0px;
+				border-right: 1px solid @bw-0;
+				.selectableText;
+				opacity: 1;
+				&:hover { opacity: 1; }
+			}
+			&.addActive {
+				margin-top: -1px;
+				display: flex;
+			}
+		}
+		display: flex;
+		flex-direction: row;
+		.patientList-patient-cell {
+			margin: 0 1px 1px 0;
+			padding: 5px;
+			background-color: @bw-100;
+			overflow: hidden;
+			white-space: nowrap;
+			text-overflow: ellipsis;
+			&:hover {
+				background-color: fade(@bw-100, 70%);
+			}
+			&.editActive {
+				display: none;
+				& + .patientList-patient-cell-edit {
+					display: block;	
+				}
+			}
+		}
+		.patientList-patient-cell-edit {
+			display: none;
+			box-shadow: 0 0 0 1px @bw-0;
+			-webkit-appearance: none;
+			margin: 0 1px 1px 0;
+			padding: 5px;
+			background-color: lighten(@blue, 25%);
+			overflow: hidden;
+			white-space: nowrap;
+			text-overflow: ellipsis;
+			.selectableText;
+		}
+		&:nth-child(odd) .patientList-patient-cell {
+			background-color: @bw-95;
+			&:hover {
+				background-color: fade(@bw-95, 70%);
+			}
+		}
+		.patientList-patient-name {
+			width: 150px;
+			& + .patientList-patient-cell-edit {
+				width: 150px;		
+			}
+		}
+		.patientList-patient-date {
+			width: 90px;
+			& + .patientList-patient-cell-edit {
+				width: 90px;		
+			}
+		}
+		.patientList-patient-email {
+			width: 250px;
+			& + .patientList-patient-cell-edit {
+				width: 250px;		
+			}
+		}
+		.patientList-patient-phone {
+			width: @phoneCellWidth;
+			& + .patientList-patient-cell-edit {
+				width: @phoneCellWidth;		
+			}
+		}
+		.patientList-patient-meds {
+			width: 200px;
+			.patientList-patient-meds-med {
+				text-align: center;
+				background-color: lighten(@green, 20%);
+				box-shadow: 0 0 0 1px @green;
+				border-radius: 100%;
+				overflow: hidden;
+				display: table;
+				float: left;
+				height: 18px;
+				width: 18px;
+				margin: 0 5px 0 0;
+			}
+			& + .patientList-patient-cell-edit {
+				width: 210px;
+				padding: 0;
+				.patientList-patient-meds-med {
+					text-align: center;
+					background-color: lighten(@green, 20%);
+					box-shadow: 0 0 0 1px @green;
+					border-radius: 100%;
+					overflow: hidden;
+					display: table;
+					float: left;
+					height: 18px;
+					width: 18px;
+					margin: 5px 0 5px 5px;
+				}
+				.medSearcher-background {
+					z-index: 150;
+					top: 0;
+					left: 0;
+					position: fixed;
+					width: 100vw;
+					height: 100vh;
+					background-color: fade(@bw-0, 50%);
+				}
+				.medSearcher {
+					top: 0;
+					z-index: 200;
+					margin-top: 30px;
+					position: fixed;
+					width: 210px;
+					background-color: @bw-100;
+					box-shadow: 0px 1px 2px 1px fade(@bw-0, 80%);
+					.medSearcher-search {
+						width: 200px;
+						padding: 5px;
+						.selectableText;
+					}
+					.medSearcher-med {
+						border-top: 1px solid @bw-0;
+						width: 200px;
+						padding: 5px;
+						overflow: hidden;
+						white-space: nowrap;
+						text-overflow: ellipsis;
+						&:hover {
+							background-color: fade(@blue, 50%)
+						}
+					}
+				}
+			}
+		}
+		.patientList-patient-delete {
+			width: 50px;
+			text-align: center;
+			&:hover {
+				background-color: lighten(@red, 30%);
+				opacity: 1;
+			}
+		}
+		.patientList-patient-confirm {
+			width: 131px;
+			text-align: center;
+			background-color: lighten(@green, 20%);
+			margin: 0px;
+			opacity: 1;
+			border-right: 1px solid @bw-0;
+			&:hover {
+				opacity: 1;
+				background-color: lighten(@green, 10%);
+			}
+		}
+		.patientList-patient-cancel {
+			width: 130px;
+			text-align: center;
+			background-color: lighten(@red, 30%);
+			margin: 0px;
+			opacity: 1;
+			&:hover {
+				opacity: 1;
+				background-color: lighten(@red, 20%);
+			}
+		}
+	}
+}
